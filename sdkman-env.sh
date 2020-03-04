@@ -15,5 +15,5 @@ __sdk_env() {
 
     [[ ! -d "$SDKMAN_CANDIDATES_DIR/$candidate/$version" ]] && sdk install "$candidate" "$version"
     sdk use "$candidate" "$version"
-  done < .sdkrc
+  done < .tool-versions
 }
