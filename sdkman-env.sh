@@ -2,11 +2,15 @@
 
 __sdk_env() {
   if [[ -f .sdkrc ]]; then
-    return __use .sdkrc
+    __use .sdkrc
+
+    return
   fi
 
   if [[ -f .tool-versions ]]; then
-    return __use .tool-versions
+    __use .tool-versions
+
+    return
   fi
 
   __sdkman_echo_red 'Neither .sdkrc nor .tool-versions found.'
@@ -19,8 +23,8 @@ __use() {
   local line
 
   while IFS= read -r line; do
-    local candidate=${line%%[= ] *}
-    local version=${line#*[= ] }
+    local candidate=${line%%[= ]*}
+    local version=${line#*[= ]}
 
     [[ ! -d "$SDKMAN_CANDIDATES_DIR/$candidate/$version" ]] && sdk install "$candidate" "$version"
     sdk use "$candidate" "$version"
