@@ -26,7 +26,10 @@ __use() {
     local candidate=${line%%[= ]*}
     local version=${line#*[= ]}
 
-    [[ ! -d "$SDKMAN_CANDIDATES_DIR/$candidate/$version" ]] && sdk install "$candidate" "$version"
-    sdk use "$candidate" "$version"
+    if [[ ! -d "$SDKMAN_CANDIDATES_DIR/$candidate/$version" ]]; then
+      __sdkman_install_candidate_version "$candidate" "$version"
+    fi
+
+    __sdk_use "$candidate" "$version"
   done < "$file"
 }
